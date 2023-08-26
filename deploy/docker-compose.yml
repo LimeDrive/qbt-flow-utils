@@ -1,0 +1,65 @@
+version: '3.9'
+
+services:
+  qbt-flow-utils:
+    build:
+      context: .
+      dockerfile: ./deploy/Dockerfile
+      target: prod
+    image: qbt-flow-utils:${QBT_FLOW_UTILS_VERSION:-latest}
+    restart: always
+    env_file:
+    - .env
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      # QBT_FLOW_UTILS_DB_FILE: /db_data/db.sqlite3
+      QBT_FLOW_UTILS_REDIS_HOST: qfu-redis
+    # volumes:
+    # - qfu-db-data:/db_data/
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    profiles: ["dev"]
+    environment:
+    - PUID=1000
+    - PGID=1000
+    - TZ=Europe/London
+    - WEBUI_PORT=8080
+    volumes:
+    - qbit-data:/downloads
+    ports:
+    - 8080:8080
+    restart: unless-stopped
+
+
+  # migrator:
+  #   image: qbt-flow-utils:${QBT_FLOW_UTILS_VERSION:-latest}
+  #   restart: "no"
+  #   command: alembic upgrade head
+  #   environment:
+  #     QBT_FLOW_UTILS_DB_FILE: /db_data/db.sqlite3
+  #   volumes:
+  #   - qfu-db-data:/db_data/
+
+  qfu-redis:
+    image: bitnami/redis:6.2.5
+    hostname: "qfu-redis"
+    restart: always
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+    healthcheck:
+      test: redis-cli ping
+      interval: 1s
+      timeout: 3s
+      retries: 50
+
+
+
+volumes:
+  qfu-db-data:
+    name: qfu-db-data
+  qbit-data:
+    name: qbit-data

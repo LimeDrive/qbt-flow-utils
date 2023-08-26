@@ -23,7 +23,7 @@ git remote add origin git@github.com:LimeDrive/qbt-flow-utils.git
 git push -u origin main
 ```
 
-Finally, install the environment and the pre-commit hooks with 
+Finally, install the environment and the pre-commit hooks with
 
 ```bash
 make install

@@ -1,6 +1,10 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, List, Optional
 
-from pydantic import BaseModel, Extra, root_validator, validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    model_validator,
+)
 
 
 class HitAndRunConfig(BaseModel):
@@ -8,16 +12,16 @@ class HitAndRunConfig(BaseModel):
     min_seed_time: Optional[int]
     min_ratio: Optional[float]
 
-    @root_validator(pre=True)
-    def validate_conditions(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+    @model_validator(mode="before")
+    @classmethod
+    def validate_conditions(cls, values: Any) -> Any:
         ignore_hit_and_run = values.get("ignore_hit_and_run", True)
         min_seed_time = values.get("min_seed_time")
         min_ratio = values.get("min_ratio")
 
         if not ignore_hit_and_run and (min_seed_time is None) and (min_ratio is None):
             raise ValueError(
-                "If ignore_hit_and_run is set to False, either min_seed_time                or min_ratio must be"
-                " provided",
+                "If ignore_hit_and_run is set to False, either min_seed_time or min_ratio must be provided",
             )
 
         return values
@@ -38,22 +42,9 @@ class AutoManageAction(BaseModel):
     sync_to_remote: Optional[bool] = None
     remove_torrent: Optional[bool] = None
 
-    @validator("pause_torrent", "remove_torrent")
-    def validate_pause_and_remove_torrent(
-        cls,
-        value: Optional[str],
-        values: dict,
-    ) -> Optional[str]:
-        protect_hit_and_run = values.get("protect_hit_and_run", False)
-
-        if protect_hit_and_run and value is not None:
-            raise ValueError(
-                "pause_torrent and remove_torrent must be                 null if protect_hit_and_run is True",
-            )
-        return value
-
-    @root_validator(pre=True)
-    def validate_single_action(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+    @model_validator(mode="before")
+    @classmethod
+    def validate_single_action(cls, values: Any) -> Any:
         actions = [
             values.get(field)
             for field in [
@@ -78,14 +69,9 @@ class AutoManageConfig(BaseModel):
 
 
 class TrackerConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     extra_score: int = 0
     tracker_keywords: List[str]
     hit_and_run: HitAndRunConfig
     auto_manage: Optional[AutoManageConfig]
-
-
-class TrackerConfigs(BaseModel):
-    class Config:
-        extra = Extra.forbid
-
-    __root__: Dict[str, TrackerConfig]

@@ -36,8 +36,8 @@ auto_manage:
   action:
   # Only one action must be set; others should be null or unset
     limit_upload_speed: 512  # Upload Speed in KB/s
-    pause_torrent:       # Not possible if protect_hit_and_run is set to True
+    pause_torrent:
     stop_torrent:
     move_to_local:
     sync_to_remote:
-    remove_torrent:       # Not possible if protect_hit_and_run is set to True
+    remove_torrent:

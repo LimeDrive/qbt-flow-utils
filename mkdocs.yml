@@ -5,11 +5,12 @@ site_description: This project offers automated torrent flow management through 
 site_author: LimeCat on Hub's
 edit_uri: edit/main/docs/
 repo_name: LimeDrive/qbt-flow-utils
-copyright: Maintained by <a href="https://LimeDrive.com">Florian</a>.
+copyright: Maintained by <a href="https://LimeDrive.com">LimeCat</a>.
 
 nav:
 - Home: index.md
-- Modules: modules.md
+- Configuration:
+  - Tracker Configuration: config/trackers.md
 plugins:
 - search
 - mkdocstrings:

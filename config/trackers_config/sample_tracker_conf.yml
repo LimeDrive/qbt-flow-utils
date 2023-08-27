@@ -1,0 +1,43 @@
+################################################################################
+##        Auto-generated config file for tracker configuration.               ##
+##     ------------------------------------------------------------------     ##
+##                      SAMPLE FILE, DO NOT USE AS IS!                        ##
+##     ------------------------------------------------------------------     ##
+##      This sample file will not be used by the script; it's provided to     ##
+##      help you create your own configuration file.                          ##
+##      You can copy and rename it with your tracker's tag name.              ##
+##     ------------------------------------------------------------------     ##
+##      Check the documentation for more info on the config file and          ##
+##      the various options.                                                  ##
+##      https://LimeDrive.github.io/qbt-flow-utils/                           ##
+################################################################################
+
+extra_score: 1000  # REQUIRED: Default: 0
+tracker_keywords:  # REQUIRED: List of string keywords to match the tracker
+- "example.com"
+- "key.example.com"
+- "other.example.com"
+
+hit_and_run:
+# REQUIRED: with at least one OPTIONAL min_ options if protect_hit_and_run = False
+  ignore_hit_and_run: false  # REQUIRED: Default: True
+  min_seed_time: 40  # OPTIONAL
+  min_ratio: 1  # OPTIONAL
+
+auto_manage:
+# OPTIONAL: Can be ommited if all values are set to null
+  conditions:
+  # One of the max_ conditions must be OK; all min_ conditions must pass
+    max_seed_time: 30
+    max_ratio: 2
+    min_active_seeder: 2
+    protect_hit_and_run: false
+
+  action:
+  # Only one action must be set; others should be null or unset
+    limit_upload_speed: 512  # Upload Speed in KB/s
+    pause_torrent:       # Not possible if protect_hit_and_run is set to True
+    stop_torrent:
+    move_to_local:
+    sync_to_remote:
+    remove_torrent:       # Not possible if protect_hit_and_run is set to True

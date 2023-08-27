@@ -2,7 +2,6 @@
 
 [![Release](https://img.shields.io/github/v/release/LimeDrive/qbt-flow-utils)](https://img.shields.io/github/v/release/LimeDrive/qbt-flow-utils)
 [![Build status](https://img.shields.io/github/actions/workflow/status/LimeDrive/qbt-flow-utils/main.yml?branch=main)](https://github.com/LimeDrive/qbt-flow-utils/actions/workflows/main.yml?query=branch%3Amain)
-[![codecov](https://codecov.io/gh/LimeDrive/qbt-flow-utils/branch/main/graph/badge.svg)](https://codecov.io/gh/LimeDrive/qbt-flow-utils)
 [![Commit activity](https://img.shields.io/github/commit-activity/m/LimeDrive/qbt-flow-utils)](https://img.shields.io/github/commit-activity/m/LimeDrive/qbt-flow-utils)
 [![License](https://img.shields.io/github/license/LimeDrive/qbt-flow-utils)](https://img.shields.io/github/license/LimeDrive/qbt-flow-utils)
 

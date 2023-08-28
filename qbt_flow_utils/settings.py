@@ -29,6 +29,15 @@ class Settings(BaseSettings):
 
     log_level: LogLevel = LogLevel.INFO
 
+    # Variables for qbt-flow-utils @TODO: review command names
+    dry_run: bool = False
+    deamon_mode: bool = False
+    auto_manage: bool = False
+    auto_tags: bool = True
+    auto_remove: bool = True
+    auto_sync: bool = False
+    auto_move: bool = False
+
     # Variables for Redis
     redis_host: str = "qfu-redis"
     redis_port: int = 6379

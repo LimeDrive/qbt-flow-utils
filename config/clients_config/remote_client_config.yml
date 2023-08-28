@@ -1,0 +1,30 @@
+################################################################################
+##         Auto-generated config file for remote client configuration.        ##
+##     ------------------------------------------------------------------     ##
+##                      SAMPLE FILE, DO NOT USE AS IS!                        ##
+##     ------------------------------------------------------------------     ##
+##      Check the documentation for more info on the config file and          ##
+##      the various options.                                                  ##
+##      https://LimeDrive.github.io/qbt-flow-utils/                           ##
+################################################################################
+
+login:
+  host: "qbt.mynass.com" # Host and port of your qbittorrent client.
+  port: 443 # Port of your qbittorrent client.
+  username: "admin" # Username of your qbittorrent client.
+  password: "adminadmin" # Password of your qbittorrent client.
+
+# Disk controle methode on remote device.
+disk_control_method:
+  keep_free_gib: 120
+
+# <Category Name> : <save_path>  # Path of your save directory.
+category:
+  films-radarr: /qBittorrent/films-radarr
+  tv-sonarr: /qBittorrent/tv-sonarr
+  musics-lidarr: /qBittorrent/musics-lidarr
+  books-readarr: /qBittorrent/books-readarr
+
+path:
+  downloads_path: /qBittorrent # Path of your download directory.
+  recycle_bin: /qBittorrent/.RecycleBin # Path of your recycle bin directory.

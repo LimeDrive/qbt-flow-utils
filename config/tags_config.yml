@@ -1,1 +1,33 @@
-# TODO: tags config and validation schema
+################################################################################
+##           Auto-generated config file for tagging configuration.            ##
+##     ------------------------------------------------------------------     ##
+##                      SAMPLE FILE, DO NOT USE AS IS!                        ##
+##     ------------------------------------------------------------------     ##
+##      Check the documentation for more info on the config file and          ##
+##      the various options.                                                  ##
+##      https://LimeDrive.github.io/qbt-flow-utils/                           ##
+################################################################################
+
+# no-hardlinks torrents
+auto_tags_no_hard_link: false
+no_hard_link_tag: "noHL"
+
+# hardlinks torrents
+auto_tags_hard_link: true
+hard_link_tag: "hardlink"
+
+# Hit-and-Run torrents
+auto_tags_hit_and_run: true
+hit_and_run_tag: "H&R"
+
+# Up limit by auto-manage or manual
+auto_tags_upload_limit: true
+upload_limit_tag: "UpLimit"
+
+# Public tracker Torrents
+auto_tags_public: true
+public_tag: "public"
+
+# None configured tracker tags
+auto_tags_unknown_trackers: true
+unknown_tracker_tag: "Other"

@@ -9,8 +9,8 @@ from pydantic import (
 
 class HitAndRunConfig(BaseModel):
     ignore_hit_and_run: bool = True
-    min_seed_time: Optional[int]
-    min_ratio: Optional[float]
+    min_seed_time: Optional[int] = None
+    min_ratio: Optional[float] = None
 
     @model_validator(mode="before")
     @classmethod
@@ -21,7 +21,8 @@ class HitAndRunConfig(BaseModel):
 
         if not ignore_hit_and_run and (min_seed_time is None) and (min_ratio is None):
             raise ValueError(
-                "If ignore_hit_and_run is set to False, either min_seed_time or min_ratio must be provided",
+                "If ignore_hit_and_run is set to False, either min_seed_time or min_ratio must be"
+                " provided",
             )
 
         return values

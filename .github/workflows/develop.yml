@@ -4,6 +4,9 @@ on:
   push:
     branches:
     - develop
+    - develop/**
+    paths:
+    - "**.py"
   pull_request:
     types: [opened, synchronize, reopened]
 

@@ -1,1 +1,25 @@
-# TODO: Scoring config and validation schema
+################################################################################
+##           Auto-generated config file for scoring configuration.            ##
+##     ------------------------------------------------------------------     ##
+##                      SAMPLE FILE, DO NOT USE AS IS!                        ##
+##     ------------------------------------------------------------------     ##
+##      Check the documentation for more info on the config file and          ##
+##      the various options.                                                  ##
+##      https://LimeDrive.github.io/qbt-flow-utils/                           ##
+################################################################################
+
+ignore_untagged_torrents: true
+
+ignore_tags_for_selection:
+- "cross-seed"
+- "to-keep"
+
+extra_tags_score:
+  public: 10000
+  to-supp: 10000
+  to-prefer: 1000
+
+score_calculation:
+  coef_day_seed_time: 0.5
+  coef_seed_ratio: 2
+  coef_nums_seeder: 0.1

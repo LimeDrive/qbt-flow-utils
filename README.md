@@ -1,4 +1,3 @@
-<div style="text-align:center">
 
 # **Work in Progress:** qbt-flow-utils
 
@@ -6,8 +5,6 @@
 [![Build status](https://img.shields.io/github/actions/workflow/status/LimeDrive/qbt-flow-utils/main.yml?branch=main)](https://github.com/LimeDrive/qbt-flow-utils/actions/workflows/main.yml?query=branch%3Amain)
 [![Commit activity](https://img.shields.io/github/commit-activity/m/LimeDrive/qbt-flow-utils)](https://img.shields.io/github/commit-activity/m/LimeDrive/qbt-flow-utils)
 [![License](https://img.shields.io/github/license/LimeDrive/qbt-flow-utils)](https://img.shields.io/github/license/LimeDrive/qbt-flow-utils)
-
-</div>
 
 This project offers automated torrent flow management through auto-tagging, disk space optimization, torrent and cross-seed management, media folder hygiene, tracker automation, and more to come.
 
@@ -67,3 +64,5 @@ The script is responsible for freeing up disk space by removing torrents and the
 This project streamlines torrent management, enhances disk space efficiency, and automates several key processes in conjunction with qBittorrent, *arr systems, and cloudplow. By employing intelligent tagging, disk space monitoring, and seamless removal of torrents, the system ensures optimal performance and resource utilization.
 
 Feel free to contribute, offer suggestions, or use this project to enhance your torrent management experience!
+
+![Static Badge](https://img.shields.io/badge/LimeCat-on_the_Hub's-red?style=for-the-badge&logo=caterpillar&logoColor=%23ffffff)

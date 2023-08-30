@@ -47,7 +47,9 @@ class Settings(BaseSettings):
 
     # Path variables
     root_path: str = "/app"  # Absolute Path to root folder
-    config_folder: str = "/config"  # Absolute path of config folder
+    config_folder: str = (  # Absolute path of config folder TODO: dev propose
+        "/root/qbt-flow-utils/config"
+    )
     download_folder: str = "/downloads"  # Path to download folder
     media_folder: str = "/media"  # Path to media folder
 

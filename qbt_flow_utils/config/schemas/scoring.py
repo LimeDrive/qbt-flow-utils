@@ -10,7 +10,7 @@ class ScoreCalculationConfig(BaseModel):
     coef_nums_seeder: float = 0.1
 
 
-class ScoringlConfig(BaseModel):
+class ScoringConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     ignore_untagged_torrents: bool = True

@@ -7,6 +7,7 @@ from qbt_flow_utils.config.schemas.trackers import TrackerConfig
 
 def test_valid_tracker_config():
     valid_config = {
+        "tracker_tag": "pytest",
         "tracker_keywords": ["example.com", "key.example.com"],
         "extra_score": 1000,
         "hit_and_run": {
@@ -31,6 +32,7 @@ def test_valid_tracker_config():
 
 def test_invalid_tracker_config():
     invalid_config = {
+        "tracker_tag": "pytest",
         "tracker_keywords": ["example.com"],
         "extra_score": 1000,
         "hit_and_run": {

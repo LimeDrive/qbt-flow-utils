@@ -3,6 +3,7 @@ from typing import Any, List, Optional
 from pydantic import (
     BaseModel,
     ConfigDict,
+    Field,
     model_validator,
 )
 
@@ -21,8 +22,8 @@ class HitAndRunConfig(BaseModel):
 
         if not ignore_hit_and_run and (min_seed_time is None) and (min_ratio is None):
             raise ValueError(
-                "If ignore_hit_and_run is set to False, either min_seed_time or min_ratio must be"
-                " provided",
+                "If ignore_hit_and_run is set to False, either min_seed_time or min_ratio must"
+                " be provided",
             )
 
         return values
@@ -72,7 +73,8 @@ class AutoManageConfig(BaseModel):
 class TrackerConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    extra_score: int = 0
+    tracker_tag: str = Field(pattern=r"^[A-Za-z0-9_-]{2,}$")
+    extra_score: int = Field(ge=0, default=0)
     tracker_keywords: List[str]
     hit_and_run: HitAndRunConfig
     auto_manage: Optional[AutoManageConfig]

@@ -22,7 +22,7 @@ class InterceptHandler(logging.Handler):
 
         # Find caller from where originated the logged message
         frame, depth = logging.currentframe(), 2
-        while frame.f_code.co_filename == logging.__file__:
+        while frame.f_code.co_filename == logging.__file__:  # type: ignore [unused-ignore]
             frame = frame.f_back  # type: ignore
             depth += 1
 
@@ -42,5 +42,6 @@ def configure_logging() -> None:  # pragma: no cover
     logger.remove()
     logger.add(
         sys.stdout,
+        colorize=True,
         level=settings.log_level.value,
     )

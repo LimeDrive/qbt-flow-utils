@@ -45,6 +45,14 @@ class Settings(BaseSettings):
     redis_pass: Optional[str] = None
     redis_base: Optional[int] = None
 
+    # Path variables
+    root_path: str = "/app"  # Absolute Path to root folder
+    config_folder: str = (  # Absolute path of config folder TODO: dev propose
+        "/root/qbt-flow-utils/config"
+    )
+    download_folder: str = "/downloads"  # Path to download folder
+    media_folder: str = "/media"  # Path to media folder
+
     @property
     def redis_url(self) -> URL:
         """

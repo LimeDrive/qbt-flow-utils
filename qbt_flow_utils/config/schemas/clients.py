@@ -29,7 +29,9 @@ class ClientDiskControlMethodConfig(BaseModel):
                     "Either max_percents or keep_free_gib must be provided",
                 )
 
-            if (values.get("max_percents") is not None) and (values.get("keep_free_gib") is not None):
+            if (values.get("max_percents") is not None) and (
+                values.get("keep_free_gib") is not None
+            ):
                 raise ValueError(
                     "Either max_percents or keep_free_gib must be provided, not both",
                 )
@@ -39,7 +41,9 @@ class ClientDiskControlMethodConfig(BaseModel):
                     "path_to_check must be provided if max_percents is provided",
                 )
 
-            if values.get("max_percents") is not None and (values["max_percents"] <= 5 or values["max_percents"] >= 95):
+            if values.get("max_percents") is not None and (
+                values["max_percents"] <= 5 or values["max_percents"] >= 95
+            ):
                 raise ValueError(
                     "max_percents must be between 5 and 95",
                 )
@@ -84,7 +88,10 @@ class ClientConfig(BaseModel):
                     f"Path {path} must be an absolute path",
                 )
 
-        if self.disk_control_method.path_to_check and not re.match(r"^/", self.disk_control_method.path_to_check):
+        if self.disk_control_method.path_to_check and not re.match(
+            r"^/",
+            self.disk_control_method.path_to_check,
+        ):
             raise ValueError(
                 f"Path {self.disk_control_method.path_to_check} must be an absolute path",
             )

@@ -12,7 +12,8 @@
 ##      https://LimeDrive.github.io/qbt-flow-utils/                           ##
 ################################################################################
 
-extra_score: 1000  # REQUIRED: Default: 0
+tracker_tag: "sample"  # REQUIRED: Tracker tag
+extra_score: 1000  # Default: 0
 tracker_keywords:  # REQUIRED: List of string keywords to match the tracker
 - "example.com"
 - "key.example.com"

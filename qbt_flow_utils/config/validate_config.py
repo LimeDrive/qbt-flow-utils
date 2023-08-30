@@ -1,1 +1,0 @@
-"""Config main validation module."""

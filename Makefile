@@ -1,3 +1,8 @@
+RED := \033[0;31m
+GREEN := \033[0;32m
+YELLOW := \033[0;33m
+RESET := \033[0m
+
 .PHONY: install
 install: ## Install the poetry environment and install the pre-commit hooks
 	@echo "🚀 Creating virtual environment using pyenv and poetry"
@@ -7,13 +12,13 @@ install: ## Install the poetry environment and install the pre-commit hooks
 
 .PHONY: check
 check: ## Run code quality tools.
-	@echo "🚀 Checking Poetry lock file consistency with 'pyproject.toml': Running poetry lock --check"
+	@echo "🚀 $(YELLOW)Checking Poetry lock file consistency with 'pyproject.toml': Running poetry lock --check$(RESET)"
 	@poetry lock --check
-	@echo "🚀 Linting code: Running pre-commit"
+	@echo "🚀 $(GREEN)Linting code: Running pre-commit$(RESET)"
 	@poetry run pre-commit run -a
-	@echo "🚀 Static type checking: Running mypy"
+	@echo "🚀 $(RED)Static type checking: Running mypy$(RESET)"
 	@poetry run mypy
-	@echo "🚀 Checking for obsolete dependencies: Running deptry"
+	@echo "🚀 $(YELLOW)Checking for obsolete dependencies: Running deptry$(RESET)"
 	@poetry run deptry .
 
 .PHONY: test

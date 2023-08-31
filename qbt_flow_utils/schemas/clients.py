@@ -4,15 +4,19 @@ from typing import Any, Dict, Optional
 from pydantic import (
     BaseModel,
     ConfigDict,
+    Field,
     model_validator,
 )
 
 
 class ClientLoginConfig(BaseModel):
     host: str
-    port: Optional[int] = None
+    port: Optional[int] = Field(None, ge=1, le=65535)
     username: str
     password: str
+    VERIFY_WEBUI_CERTIFICATE: bool = False
+    RAISE_ERROR_FOR_UNSUPPORTED_QBITTORRENT_VERSIONS: bool = True
+    RAISE_NOTIMPLEMENTEDERROR_FOR_UNIMPLEMENTED_API_ENDPOINTS: bool = True
 
 
 class ClientDiskControlMethodConfig(BaseModel):

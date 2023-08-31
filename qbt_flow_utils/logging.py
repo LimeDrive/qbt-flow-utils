@@ -5,7 +5,7 @@ from typing import Union
 
 from loguru import logger
 
-from .settings import settings
+from qbt_flow_utils.settings import settings
 
 
 class InterceptHandler(logging.Handler):

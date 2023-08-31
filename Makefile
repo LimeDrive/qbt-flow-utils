@@ -18,6 +18,8 @@ check: ## Run code quality tools.
 	@poetry run pre-commit run -a
 	@echo "🚀 $(RED)Static type checking: Running mypy$(RESET)"
 	@poetry run mypy
+	@echo "🚀 $(RED)Static type checking: Running pytype$(RESET)"
+	@poetry run pytype
 	@echo "🚀 $(YELLOW)Checking for obsolete dependencies: Running deptry$(RESET)"
 	@poetry run deptry .
 

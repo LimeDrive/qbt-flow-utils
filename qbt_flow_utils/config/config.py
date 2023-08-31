@@ -6,9 +6,9 @@ import yaml
 from box import Box
 from pydantic import ValidationError
 
-from ..logging import logger
-from ..schemas import ClientConfig, ScoringConfig, TagsConfig, TrackerConfig
-from ..settings import settings
+from qbt_flow_utils.logging import logger
+from qbt_flow_utils.schemas import ClientConfig, ScoringConfig, TagsConfig, TrackerConfig
+from qbt_flow_utils.settings import settings
 
 
 def _load_trackers_config(config_path: str) -> Tuple[Box, List[str]]:

@@ -2,7 +2,7 @@
 import pytest
 from pydantic import ValidationError
 
-from qbt_flow_utils.config.schemas.trackers import TrackerConfig
+from qbt_flow_utils.schemas.trackers import TrackerConfig
 
 
 def test_valid_tracker_config():

@@ -1,5 +1,5 @@
 """Configuration files for qbt_flow_utils."""
-from qbt_flow_utils.config.config import (
+from .config import (
     get_clients_config,
     get_clients_list,
     get_scoring_config,

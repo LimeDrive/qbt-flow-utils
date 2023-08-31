@@ -2,7 +2,7 @@
 import pytest
 from pydantic import ValidationError
 
-from qbt_flow_utils.config.schemas.tags import TagsConfig
+from qbt_flow_utils.schemas.tags import TagsConfig
 
 
 def test_valid_tags_config():

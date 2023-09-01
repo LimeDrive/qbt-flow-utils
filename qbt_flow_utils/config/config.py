@@ -124,9 +124,14 @@ def _load_clients_config(config_dir: str) -> Tuple[Box, List[str]]:
     clients_list = []
 
     files = [f for f in os.listdir(config_dir) if f.endswith((".yml", ".yaml"))]
+
     if not files:
-        logger.info(f"No .yml or .yaml files found in '{config_dir}' directory.")
+        logger.error(f"No .yml or .yaml files found in '{config_dir}' directory.")
         raise ValueError(f"No .yml or .yaml files found in '{config_dir}' directory.")
+
+    if "local_client_config.yml" not in files:
+        logger.error(f"local_client_config.yml not found in '{config_dir}' directory.")
+        raise FileNotFoundError(f"local_client_config.yml not found in '{config_dir}' directory.")
 
     for filename in files:
         if filename.endswith((".yml", ".yaml")):

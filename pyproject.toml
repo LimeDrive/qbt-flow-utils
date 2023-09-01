@@ -50,7 +50,7 @@ plugins = [
 exclude = [
     '.venv',
     '.vscode',
-    'connect.py', # causes mypy to crash : Segmentation fault (core dumped)
+    'qbt_flow_utils/qbittorrent', # causes mypy to crash : Segmentation fault (core dumped)
 ]
 files = ["qbt_flow_utils"]
 disallow_untyped_defs = "True"

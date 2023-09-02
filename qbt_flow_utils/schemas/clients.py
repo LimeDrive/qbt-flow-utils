@@ -4,18 +4,27 @@ from typing import Any, Dict, Optional
 from pydantic import (
     BaseModel,
     ConfigDict,
+    Field,
+    RootModel,
     model_validator,
 )
 
 
 class ClientLoginConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
     host: str
-    port: Optional[int] = None
+    port: Optional[int] = Field(None, ge=1, le=65535)
     username: str
     password: str
+    VERIFY_WEBUI_CERTIFICATE: bool = False
+    RAISE_ERROR_FOR_UNSUPPORTED_QBITTORRENT_VERSIONS: bool = True
+    RAISE_NOTIMPLEMENTEDERROR_FOR_UNIMPLEMENTED_API_ENDPOINTS: bool = True
 
 
 class ClientDiskControlMethodConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
     max_percents: Optional[int] = None
     path_to_check: Optional[str] = None
     keep_free_gib: Optional[int] = None
@@ -61,12 +70,14 @@ class ClientDiskControlMethodConfig(BaseModel):
 
 
 class ClientPathConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
     downloads_path: str
     recycle_bin: str
 
 
 class ClientConfig(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", frozen=True)
 
     login: ClientLoginConfig
     disk_control_method: ClientDiskControlMethodConfig
@@ -97,3 +108,19 @@ class ClientConfig(BaseModel):
             )
 
         return self
+
+
+class ClientsConfig(RootModel[Dict[str, ClientConfig]]):
+    root: Dict[str, ClientConfig]
+
+    def __iter__(self):
+        return iter(self.root)
+
+    def __getitem__(self, item):
+        return self.root[item]
+
+    def __len__(self):
+        return len(self.root)
+
+    def get_items(self):
+        yield from self.root.items()

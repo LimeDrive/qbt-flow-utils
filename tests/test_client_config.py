@@ -2,7 +2,7 @@
 import pytest
 from pydantic import ValidationError
 
-from qbt_flow_utils.config.schemas.clients import ClientConfig
+from qbt_flow_utils.schemas.clients import ClientConfig
 
 
 def test_valid_client_config():

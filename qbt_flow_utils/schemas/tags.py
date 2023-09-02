@@ -11,7 +11,7 @@ from pydantic import (
 class TagsConfig(BaseModel):
     """Tags validation schema."""
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", frozen=True)
 
     auto_tags_no_hard_link: bool = False
     no_hard_link_tag: str = "noHL"

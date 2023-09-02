@@ -1,14 +1,17 @@
-from typing import Any, List, Optional
+from typing import Any, Dict, List, Optional
 
 from pydantic import (
     BaseModel,
     ConfigDict,
     Field,
+    RootModel,
     model_validator,
 )
 
 
 class HitAndRunConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
     ignore_hit_and_run: bool = True
     min_seed_time: Optional[int] = None
     min_ratio: Optional[float] = None
@@ -30,6 +33,8 @@ class HitAndRunConfig(BaseModel):
 
 
 class AutoManageConditions(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
     max_seed_time: Optional[int] = None
     max_ratio: Optional[float] = None
     min_active_seeder: Optional[int] = None
@@ -37,6 +42,8 @@ class AutoManageConditions(BaseModel):
 
 
 class AutoManageAction(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
     limit_upload_speed: Optional[int] = None
     pause_torrent: Optional[bool] = None
     stop_torrent: Optional[bool] = None
@@ -71,10 +78,26 @@ class AutoManageConfig(BaseModel):
 
 
 class TrackerConfig(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", frozen=True)
 
     tracker_tag: str = Field(pattern=r"^[A-Za-z0-9_-]{2,}$")
     extra_score: int = Field(ge=0, default=0)
     tracker_keywords: List[str]
     hit_and_run: HitAndRunConfig
     auto_manage: Optional[AutoManageConfig]
+
+
+class TrackersConfig(RootModel[Dict[str, TrackerConfig]]):
+    root: Dict[str, TrackerConfig]
+
+    def __iter__(self):
+        return iter(self.root)
+
+    def __getitem__(self, item):
+        return self.root[item]
+
+    def __len__(self):
+        return len(self.root)
+
+    def get_items(self):
+        yield from self.root.items()

@@ -5,13 +5,15 @@ from pydantic import BaseModel, ConfigDict
 
 
 class ScoreCalculationConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
     coef_day_seed_time: float = 0.5
     coef_seed_ratio: int = 2
     coef_nums_seeder: float = 0.1
 
 
 class ScoringConfig(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", frozen=True)
 
     ignore_untagged_torrents: bool = True
     ignore_tags_for_selection: Optional[List[str]] = None

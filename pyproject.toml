@@ -17,7 +17,6 @@ yarl = "^1.9.2"
 loguru = "^0.7.0"
 pydantic = "^2.3.0"
 pyyaml = "^6.0.1"
-python-box = "^7.1.1"
 qbittorrent-api = "^2023.7.52"
 
 [tool.poetry.group.dev.dependencies]
@@ -51,6 +50,8 @@ exclude = [
     '.venv',
     '.vscode',
     'qbt_flow_utils/qbittorrent', # causes mypy to crash : Segmentation fault (core dumped)
+    'qbt_flow_utils/torrents', # causes mypy to crash : Segmentation fault (core dumped)
+    'qbt_flow_utils/lists', # causes mypy to crash : Segmentation fault (core dumped)
 ]
 files = ["qbt_flow_utils"]
 disallow_untyped_defs = "True"

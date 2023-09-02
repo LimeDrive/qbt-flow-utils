@@ -1,11 +1,13 @@
 """Schema for torrent data from qBittorrent API."""
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 # TODO: Add all fields from qbtittorrentapi.torrent.TorrentInfo,
 # TODO: for the moment they are only the ones come from the qbittorrent docapi
-class TorrentInfo(BaseModel):
+class APITorrentInfos(BaseModel):
     """Schema for torrent data from qBittorrent API."""
+
+    model_config = ConfigDict(extra="allow")
 
     added_on: int  # Time (Unix Epoch) when the torrent was added to the client
     amount_left: int  # Amount of data left to download (bytes)
@@ -54,3 +56,25 @@ class TorrentInfo(BaseModel):
     uploaded: int  # Amount of data uploaded
     uploaded_session: int  # Amount of data uploaded this session
     upspeed: int  # Torrent upload speed (bytes/s)
+
+
+class QFUTorrentSettings(BaseModel):
+    """QFU torrent info."""
+
+    model_config = ConfigDict(
+        extra="forbid",
+    )
+
+    tracker_tag: str | None = None
+    score: float | int | None = None
+    is_hit_and_run: bool | None = None
+    is_hard_link: bool | None = None
+    is_ok_removal: bool | None = None
+    is_pulic: bool | None = None
+    is_issue: bool | None = None
+    is_cross_seed: bool | None = None
+
+
+class TorrentInfos(BaseModel):
+    api: APITorrentInfos
+    qfu: QFUTorrentSettings

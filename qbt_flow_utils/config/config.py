@@ -207,7 +207,7 @@ def get_trackers_config() -> TrackersConfig:
     return trackers_config
 
 
-def get_trackers_tags() -> List[str]:
+def get_trackers_tags_list() -> List[str]:
     """Get trackers tags.
     :return: Trackers tags.
     :rtype: List[str]"""

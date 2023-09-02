@@ -6,7 +6,7 @@ from qbt_flow_utils.config.config import (
     get_tags_config,
     get_tags_extra_scrore_dict,
     get_trackers_config,
-    get_trackers_tags,
+    get_trackers_tags_list,
 )
 
 __all__ = [
@@ -15,6 +15,6 @@ __all__ = [
     "get_scoring_config",
     "get_tags_config",
     "get_trackers_config",
-    "get_trackers_tags",
+    "get_trackers_tags_list",
     "get_tags_extra_scrore_dict",
 ]

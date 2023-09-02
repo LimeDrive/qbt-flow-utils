@@ -33,5 +33,9 @@ def _process_torrent_scoring(
 
 
 def get_torrent_score(torrent: APITorrentInfos) -> float:
-    """Get torrent score."""
+    """Get torrent score.
+    :param torrent: torrent to get score
+    :type torrent: APITorrentInfos
+    :return: torrent score
+    :rtype: float"""
     return _process_torrent_scoring(torrent=torrent)

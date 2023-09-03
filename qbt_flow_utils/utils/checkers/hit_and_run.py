@@ -1,18 +1,15 @@
 """Functions for handling hit and run torrents."""
-from typing import List
 
-from qbt_flow_utils.config import get_trackers_config, get_trackers_tags_list
+from qbt_flow_utils.config import Config, get_config
 from qbt_flow_utils.logging import logger
-from qbt_flow_utils.schemas import APITorrentInfos, TrackersConfig
+from qbt_flow_utils.schemas import APITorrentInfos
 
-trackers_config = get_trackers_config()
-trackers_tags = get_trackers_tags_list()
+config = get_config()
 
 
 def _process_hit_and_run_check(
     torrent: APITorrentInfos,
-    trackers_config: TrackersConfig = trackers_config,
-    trackers_tags: List[str] = trackers_tags,
+    config: Config = config,
 ) -> bool:
     """Process hit and run check.
     :param torrent: Torrent to check
@@ -24,9 +21,9 @@ def _process_hit_and_run_check(
     :return: True if hit and run, False otherwise
     :rtype: bool
     """
-    for tag in trackers_tags:
+    for tag in config.trackers_tags_list:
         if tag in torrent.tags:
-            hit_and_run_conditions = trackers_config[tag].hit_and_run.model_dump(exclude_none=True)
+            hit_and_run_conditions = config.trackers[tag].hit_and_run.model_dump(exclude_none=True)
 
             for condition, threshold in hit_and_run_conditions.items():
                 if condition == "ignore_hit_and_run" and threshold:

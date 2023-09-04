@@ -9,6 +9,7 @@ __pycache__/
 *.code-workspace
 .ruff_cache/
 .vscode/
+.personal/
 
 # C extensions
 *.so

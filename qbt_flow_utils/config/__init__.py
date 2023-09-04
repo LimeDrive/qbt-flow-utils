@@ -35,11 +35,6 @@ class Config(BaseModel):
         :type trackers_tags_list: `List[str]`
     `settings`: Settings
         :type settings: `Settings`
-
-    >>> from qbt_flow_utils.config import get_config
-    >>> config = get_config()
-    >>> if "local" in config.clients_list:
-    >>>     local_client = QBTSession("local", config=config)
     """
 
     clients: ClientsConfig

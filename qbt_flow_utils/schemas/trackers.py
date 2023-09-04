@@ -1,19 +1,16 @@
+from datetime import timedelta
 from typing import Any, Dict, List, Optional
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    RootModel,
-    model_validator,
-)
+from pydantic import BaseModel, ByteSize, ConfigDict, Field, RootModel, model_validator
+
+from qbt_flow_utils.utils.validator_utils import parse_time
 
 
 class HitAndRunConfig(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
     ignore_hit_and_run: bool = True
-    min_seed_time: Optional[int] = None
+    min_seed_time: Optional[timedelta] = None
     min_ratio: Optional[float] = None
 
     @model_validator(mode="before")
@@ -22,6 +19,9 @@ class HitAndRunConfig(BaseModel):
         ignore_hit_and_run = values.get("ignore_hit_and_run", True)
         min_seed_time = values.get("min_seed_time")
         min_ratio = values.get("min_ratio")
+
+        if min_seed_time is not None:
+            values["min_seed_time"] = parse_time(min_seed_time)
 
         if not ignore_hit_and_run and (min_seed_time is None) and (min_ratio is None):
             raise ValueError(
@@ -35,7 +35,7 @@ class HitAndRunConfig(BaseModel):
 class AutoManageConditions(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
-    max_seed_time: Optional[int] = None
+    max_seed_time: Optional[timedelta] = None
     max_ratio: Optional[float] = None
     min_active_seeder: Optional[int] = None
     protect_hit_and_run: bool = False
@@ -44,7 +44,7 @@ class AutoManageConditions(BaseModel):
 class AutoManageAction(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
-    limit_upload_speed: Optional[int] = None
+    limit_upload_speed: Optional[ByteSize] = None
     pause_torrent: Optional[bool] = None
     stop_torrent: Optional[bool] = None
     move_to_local: Optional[bool] = None
@@ -53,10 +53,12 @@ class AutoManageAction(BaseModel):
 
     @model_validator(mode="before")
     @classmethod
+    # TODO: review this validator
     def validate_single_action(cls, values: Any) -> Any:
         actions = [
             values.get(field)
             for field in [
+                "limit_upload_speed",
                 "pause_torrent",
                 "stop_torrent",
                 "move_to_local",

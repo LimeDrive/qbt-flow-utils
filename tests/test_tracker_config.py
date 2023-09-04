@@ -12,18 +12,18 @@ def test_valid_tracker_config():
         "extra_score": 1000,
         "hit_and_run": {
             "ignore_hit_and_run": False,
-            "min_seed_time": 40,
+            "min_seed_time": "48h",
             "min_ratio": 1,
         },
         "auto_manage": {
             "conditions": {
-                "max_seed_time": 30,
+                "max_seed_time": "3d",
                 "max_ratio": 2,
                 "min_active_seeder": 2,
                 "protect_hit_and_run": False,
             },
             "action": {
-                "limit_upload_speed": 512,
+                "limit_upload_speed": "512KiB",
             },
         },
     }

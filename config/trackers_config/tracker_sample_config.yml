@@ -22,21 +22,21 @@ tracker_keywords:  # REQUIRED: List of string keywords to match the tracker
 hit_and_run:
 # REQUIRED: with at least one OPTIONAL min_ options if protect_hit_and_run = False
   ignore_hit_and_run: false  # REQUIRED: Default: True
-  min_seed_time: 40  # OPTIONAL
+  min_seed_time: "72h"  # OPTIONAL Accepts: [-][DD ][HH:MM]SS[.ffffff] or [±]P[DD]DT[HH]H[MM]M[SS]S
   min_ratio: 1  # OPTIONAL
 
 auto_manage:
 # OPTIONAL: Can be ommited if all values are set to null
   conditions:
   # One of the max_ conditions must be OK; all min_ conditions must pass
-    max_seed_time: 30
+    max_seed_time: "4d" # Accepts: [-][DD ][HH:MM]SS[.ffffff] or [±]P[DD]DT[HH]H[MM]M[SS]S
     max_ratio: 2
     min_active_seeder: 2
     protect_hit_and_run: false
 
   action:
   # Only one action must be set; others should be null or unset
-    limit_upload_speed: 512  # Upload Speed in KB/s
+    limit_upload_speed: "512KiB"  # Accepts: [B|K|M|G|T|P] or [B|K|M|G|T|P]iB
     pause_torrent:
     stop_torrent:
     move_to_local:

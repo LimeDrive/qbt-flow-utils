@@ -1,5 +1,8 @@
 """Schema for torrent data from qBittorrent API."""
-from pydantic import BaseModel, ConfigDict
+from datetime import date, timedelta
+from typing import List
+
+from pydantic import BaseModel, ByteSize, ConfigDict, NegativeInt
 
 
 # TODO: Add all fields from qbtittorrentapi.torrent.TorrentInfo,
@@ -9,24 +12,24 @@ class APITorrentInfos(BaseModel):
 
     model_config = ConfigDict(extra="allow")
 
-    added_on: int  # Time (Unix Epoch) when the torrent was added to the client
-    amount_left: int  # Amount of data left to download (bytes)
+    added_on: date  # Time (Unix Epoch) when the torrent was added to the client
+    amount_left: ByteSize  # Amount of data left to download (bytes)
     auto_tmm: bool  # Whether this torrent is managed by Automatic Torrent Management
     availability: float  # Percentage of file pieces currently available
     category: str  # Category of the torrent
-    completed: int  # Amount of transfer data completed (bytes)
-    completion_on: int  # Time (Unix Epoch) when the torrent completed
+    completed: ByteSize  # Amount of transfer data completed (bytes)
+    completion_on: date  # Time (Unix Epoch) when the torrent completed
     content_path: str  # Absolute path of torrent content (root path for multifile torrents,
     # absolute file path for singlefile torrents)
-    dl_limit: int  # Torrent download speed limit (bytes/s). -1 if unlimited.
-    dlspeed: int  # Torrent download speed (bytes/s)
-    downloaded: int  # Amount of data downloaded
-    downloaded_session: int  # Amount of data downloaded this session
+    dl_limit: ByteSize | NegativeInt  # Torrent download speed limit (bytes/s). -1 if unlimited.
+    dlspeed: ByteSize  # Torrent download speed (bytes/s)
+    downloaded: ByteSize  # Amount of data downloaded
+    downloaded_session: ByteSize  # Amount of data downloaded this session
     eta: int  # Torrent ETA (seconds)
     f_l_piece_prio: bool  # True if first last piece are prioritized
     force_start: bool  # True if force start is enabled for this torrent
     hash_v1: str  # TODO: Torrent hash (check with the real return value)
-    last_activity: int  # Last time (Unix Epoch) when a chunk was downloaded/uploaded
+    last_activity: date  # Last time (Unix Epoch) when a chunk was downloaded/uploaded
     magnet_uri: str  # Magnet URI corresponding to this torrent
     max_ratio: float  # Maximum share ratio until torrent is stopped from seeding/uploading
     max_seeding_time: int  # Maximum seeding time (seconds) until torrent is stopped from seeding
@@ -40,22 +43,22 @@ class APITorrentInfos(BaseModel):
     ratio: float  # Torrent share ratio. Max ratio value: 9999.
     ratio_limit: float  # TODO (what is different from max_ratio?)
     save_path: str  # Path where this torrent's data is stored
-    seeding_time: int  # Torrent elapsed time while complete (seconds)
+    seeding_time: timedelta  # Torrent elapsed time while complete (seconds)
     seeding_time_limit: int  # TODO (what is different from max_seeding_time?)
-    seen_complete: int  # Time (Unix Epoch) when this torrent was last seen complete
+    seen_complete: date  # Time (Unix Epoch) when this torrent was last seen complete
     seq_dl: bool  # True if sequential download is enabled
-    size: int  # Total size (bytes) of files selected for download
+    size: ByteSize  # Total size (bytes) of files selected for download
     state: str  # Torrent state. See table here below for the possible values
     super_seeding: bool  # True if super seeding is enabled
-    tags: str  # Comma-concatenated tag list of the torrent
-    time_active: int  # Total active time (seconds)
-    total_size: int  # Total size (bytes) of all files in this torrent (including unselected ones)
+    tags: List[str]  # Comma-concatenated tag list of the torrent
+    time_active: timedelta  # Total active time (seconds)
+    total_size: ByteSize  # Total size (bytes) of all files (including unselected ones)
     # The first tracker with working status. Returns empty string if no tracker is working.
     tracker: str
-    up_limit: int  # Torrent upload speed limit (bytes/s). -1 if unlimited.
-    uploaded: int  # Amount of data uploaded
-    uploaded_session: int  # Amount of data uploaded this session
-    upspeed: int  # Torrent upload speed (bytes/s)
+    up_limit: ByteSize  # Torrent upload speed limit (bytes/s). -1 if unlimited.
+    uploaded: ByteSize  # Amount of data uploaded
+    uploaded_session: ByteSize  # Amount of data uploaded this session
+    upspeed: ByteSize  # Torrent upload speed (bytes/s)
 
 
 class QFUTorrentSettings(BaseModel):
@@ -76,5 +79,8 @@ class QFUTorrentSettings(BaseModel):
 
 
 class TorrentInfos(BaseModel):
+    """Torrent infos."""
+
+    client: str
     api: APITorrentInfos
-    qfu: QFUTorrentSettings
+    qfu: QFUTorrentSettings | None = None

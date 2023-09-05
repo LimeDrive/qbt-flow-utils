@@ -24,7 +24,7 @@ def _process_hit_and_run_check(
     for tag in config.trackers_tags_list:
         if tag in torrent.api.tags:
             hit_and_run_conditions = config.trackers[tag].hit_and_run.model_dump()
-            # TODO: check timedelta objects in dump dict. and review the loop.
+            # TODO:FIX check timedelta objects in dump dict. and review the loop.
             for condition, threshold in hit_and_run_conditions.items():
                 if condition == "ignore_hit_and_run" and threshold:
                     logger.debug(f"Hit and run check ignored for {tag}: {torrent.api.name}")

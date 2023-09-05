@@ -42,7 +42,7 @@ def _load_trackers_config(config_path: str) -> Tuple[TrackersConfig, List[str]]:
 
     for filename in files:
         if filename.endswith((".yml", ".yaml")):
-            with open(os.path.join(config_path, filename)) as file:
+            with open(os.path.join(config_path, filename)) as file:  # type: ignore
                 data = yaml.safe_load(file)
             try:
                 tracker_config = TrackerConfig.model_validate(data)
@@ -190,10 +190,10 @@ clients_config_folder = os.path.join(config_folder, "clients_config")
 scoring_config_file = os.path.join(config_folder, "scoring_config.yml")
 tags_config_file = os.path.join(config_folder, "tags_config.yml")
 
-trackers_config, trackers_tags = _load_trackers_config(trackers_config_folder)
 clients_config, clients_list = _load_clients_config(clients_config_folder)
 scoring_config = _load_scoring_config(scoring_config_file)
 tags_config = _load_tags_config(tags_config_file)
+trackers_config, trackers_tags = _load_trackers_config(trackers_config_folder)
 tags_extra_scrore_dict = _process_tags_extra_scrore_dict(
     trackers_config=trackers_config,
     scoring_config=scoring_config,

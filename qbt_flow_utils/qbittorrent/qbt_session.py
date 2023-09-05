@@ -66,10 +66,11 @@ class QBTSession:
             logger.error("Could not set alternative speed limits.")
             raise
 
-    def get_client_torrents_info(self) -> qbt.TorrentInfoList:
+    def get_client_torrents_info(self, **kwargs) -> qbt.TorrentInfoList:
         """Get torrents list from client."""
-        return self.client.torrents_info(status_filter="all", sort="added_on")
+        return self.client.torrents_info(**kwargs)
 
+    # TODO:HIGHT Move @api_torrents_dict to listerr module
     def api_torrents_dict(self) -> Dict[str, TorrentInfos]:
         """Create qfu api base torrents dict.
         To be used as base for qfu torrents list.

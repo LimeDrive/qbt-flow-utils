@@ -36,6 +36,9 @@ class TagsConfig(BaseModel):
     auto_tags_unknown_trackers: bool = False
     unknown_tracker_tag: str = "Other"
 
+    # External app cross-seed tag :
+    cross_seed_tag: str = "cross-seed"
+
     @model_validator(mode="before")
     @classmethod
     def validate_tags_string(cls, values: Any) -> Any:

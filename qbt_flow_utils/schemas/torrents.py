@@ -4,9 +4,10 @@ from typing import List
 
 from pydantic import BaseModel, ByteSize, ConfigDict, NegativeInt
 
+# * Add all fields from qbtittorrentapi.torrent.TorrentInfo,
+# * for the moment they are only the ones come from the qbittorrent docapi
 
-# TODO: Add all fields from qbtittorrentapi.torrent.TorrentInfo,
-# TODO: for the moment they are only the ones come from the qbittorrent docapi
+
 class APITorrentInfos(BaseModel):
     """Schema for torrent data from qBittorrent API."""
 
@@ -28,7 +29,8 @@ class APITorrentInfos(BaseModel):
     eta: int  # Torrent ETA (seconds)
     f_l_piece_prio: bool  # True if first last piece are prioritized
     force_start: bool  # True if force start is enabled for this torrent
-    hash_v1: str  # TODO: Torrent hash (check with the real return value)
+    # TODO:HIGHT check if this is the correct var name.
+    hash_v1: str  # *! Torrent hash (check with the real return value).
     last_activity: date  # Last time (Unix Epoch) when a chunk was downloaded/uploaded
     magnet_uri: str  # Magnet URI corresponding to this torrent
     max_ratio: float  # Maximum share ratio until torrent is stopped from seeding/uploading
@@ -41,10 +43,10 @@ class APITorrentInfos(BaseModel):
     priority: int  # Torrent priority. Returns -1 if queuing is disabled or torrent is in seed mode
     progress: float  # Torrent progress (percentage/100)
     ratio: float  # Torrent share ratio. Max ratio value: 9999.
-    ratio_limit: float  # TODO (what is different from max_ratio?)
+    ratio_limit: float  # * (what is different from max_ratio?)
     save_path: str  # Path where this torrent's data is stored
     seeding_time: timedelta  # Torrent elapsed time while complete (seconds)
-    seeding_time_limit: int  # TODO (what is different from max_seeding_time?)
+    seeding_time_limit: int  # * (what is different from max_seeding_time?)
     seen_complete: date  # Time (Unix Epoch) when this torrent was last seen complete
     seq_dl: bool  # True if sequential download is enabled
     size: ByteSize  # Total size (bytes) of files selected for download

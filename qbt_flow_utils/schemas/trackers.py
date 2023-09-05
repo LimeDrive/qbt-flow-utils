@@ -3,7 +3,7 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, ByteSize, ConfigDict, Field, RootModel, model_validator
 
-from qbt_flow_utils.utils.validator_utils import parse_time
+from qbt_flow_utils.schemas.utils import parse_time
 
 
 class HitAndRunConfig(BaseModel):
@@ -53,7 +53,7 @@ class AutoManageAction(BaseModel):
 
     @model_validator(mode="before")
     @classmethod
-    # TODO: review this validator
+    # TODO:LOW review validate_single_action validator
     def validate_single_action(cls, values: Any) -> Any:
         actions = [
             values.get(field)

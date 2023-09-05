@@ -1,1 +1,0 @@
-"""Checker for torrent trackers."""

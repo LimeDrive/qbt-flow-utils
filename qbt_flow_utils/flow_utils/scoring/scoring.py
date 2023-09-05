@@ -13,7 +13,7 @@ def _process_torrent_scoring(
 ) -> float:
     """Process torrent scoring."""
     coef = config.scoring.score_calculation
-    tags = torrent.api.tags  # TODO: check if tags is a list in schema with validator
+    tags = torrent.api.tags
 
     score = 10
 

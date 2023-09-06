@@ -1,12 +1,9 @@
 """Connection to qBittorrent client."""
-from typing import Dict
 
 import qbittorrentapi as qbt
-from pydantic import ValidationError
 
 from qbt_flow_utils.config import Config, get_config
 from qbt_flow_utils.logging import logger
-from qbt_flow_utils.schemas.torrents import APITorrentInfos, TorrentInfos
 
 
 class QBTSession:
@@ -69,30 +66,6 @@ class QBTSession:
     def get_client_torrents_info(self, **kwargs) -> qbt.TorrentInfoList:
         """Get torrents list from client."""
         return self.client.torrents_info(**kwargs)
-
-    # TODO:HIGHT Move @api_torrents_dict to listerr module
-    def api_torrents_dict(self) -> Dict[str, TorrentInfos]:
-        """Create qfu api base torrents dict.
-        To be used as base for qfu torrents list.
-        :return: Dict of torrents with hash as key and `TorrentInfos` as value
-        :rtype: `Dict[str, TorrentInfos]`
-
-        :Examples return:
-        `{"hash1": APITorrentInfos, "hash2": APITorrentInfos}`
-        """
-        torrents_list: Dict[str, TorrentInfos] = {}
-
-        for torrent in self.torrents_info:
-            try:
-                api_torrent_infos = APITorrentInfos.model_validate(torrent)
-                torrents_list[str(torrent.hash)] = TorrentInfos(
-                    client=self.client_name,
-                    api=api_torrent_infos,
-                )
-            except ValidationError as e:
-                logger.error(f"Could not validate torrent {torrent.hash}: {e}")
-
-        return torrents_list
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 """Schema for torrent data from qBittorrent API."""
 from datetime import date, timedelta
-from typing import List
+from typing import List, Tuple
 
 from pydantic import BaseModel, ByteSize, ConfigDict, NegativeInt
 
@@ -57,32 +57,23 @@ class APITorrentInfos(BaseModel):
     total_size: ByteSize  # Total size (bytes) of all files (including unselected ones)
     # The first tracker with working status. Returns empty string if no tracker is working.
     tracker: str
+    trackers_count: int  # Number of trackers
     up_limit: ByteSize  # Torrent upload speed limit (bytes/s). -1 if unlimited.
     uploaded: ByteSize  # Amount of data uploaded
     uploaded_session: ByteSize  # Amount of data uploaded this session
     upspeed: ByteSize  # Torrent upload speed (bytes/s)
 
 
-class QFUTorrentSettings(BaseModel):
-    """QFU torrent info."""
+class TorrentInfos(BaseModel):
+    """Torrent infos."""
 
-    model_config = ConfigDict(
-        extra="forbid",
-    )
-
+    api: APITorrentInfos
+    client: str
+    ok_removal: bool | None = None
     tracker_tag: str | None = None
     score: float | int | None = None
     is_hit_and_run: bool | None = None
     is_hard_link: bool | None = None
-    is_ok_removal: bool | None = None
-    is_pulic: bool | None = None
-    is_issue: bool | None = None
-    is_cross_seed: bool | None = None
-
-
-class TorrentInfos(BaseModel):
-    """Torrent infos."""
-
-    client: str
-    api: APITorrentInfos
-    qfu: QFUTorrentSettings | None = None
+    is_public: bool | None = None
+    is_issue: bool | None = None  # TODO:LOW implement issue check
+    is_cross_seed: bool | Tuple[str, str] | None = None

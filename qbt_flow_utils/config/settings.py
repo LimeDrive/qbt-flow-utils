@@ -37,6 +37,8 @@ class Settings(BaseSettings):
     auto_remove: bool = True
     auto_sync: bool = False
     auto_move: bool = False
+    check_hard_links: bool = True
+    check_cross_seed: bool = True
 
     # Variables for Redis
     redis_host: str = "qfu-redis"
@@ -74,7 +76,7 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(
         env_file=".env",
-        env_prefix="QBT_FLOW_UTILS_",
+        env_prefix="QFU_",
         env_file_encoding="utf-8",
     )
 

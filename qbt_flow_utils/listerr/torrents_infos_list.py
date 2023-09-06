@@ -78,7 +78,7 @@ def _process_torrents_infos_list(
             if config.tags.auto_tags_tracker_issue:
                 torrent_info.is_issue = check_issue_tracker(torrent=torrent)
 
-            if torrent.state in ["forcedUP", "stalledDL", "queuedUP", "pausedUP", "uploading"]:
+            if torrent.state in ["forcedUP", "stalledUP", "queuedUP", "pausedUP", "uploading"]:
                 torrents_list[str(torrent.hash)] = torrent_info
 
     assert torrents_list != {}, "torrents_list is empty"  # noqa: S101

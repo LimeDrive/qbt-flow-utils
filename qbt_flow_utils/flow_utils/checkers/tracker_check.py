@@ -1,4 +1,5 @@
 """Checker for torrent trackers."""
+from qbittorrentapi import TorrentDictionary
 
 from qbt_flow_utils.config import Config, get_config
 from qbt_flow_utils.logging import logger
@@ -38,3 +39,25 @@ def get_torrent_tracker(torrent: APITorrentInfos) -> str:
     :return: Tracker tag
     :rtype: str"""
     return _process_tracker_check(torrent=torrent)
+
+
+def _process_issue_tracker_check(
+    torrent: TorrentDictionary,
+    config: Config = config,
+) -> bool:
+    for tracker in torrent.trackers:
+        if tracker.status == 4:
+            logger.debug(f"Tracker issue: {tracker.url} for {torrent.name}, {torrent.hash}")
+            return True
+    else:
+        logger.debug(f"No tracker issue for {torrent.name}, {torrent.hash}")
+        return False
+
+
+def check_issue_tracker(torrent: TorrentDictionary) -> bool:
+    """Get torrent tracker.
+    :param torrent: Torrent to get tracker from
+    :type torrent: TorrentInfos
+    :return: True if issue, False otherwise
+    :rtype: bool"""
+    return _process_issue_tracker_check(torrent=torrent)

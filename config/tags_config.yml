@@ -31,3 +31,8 @@ public_tag: "public"
 # None configured tracker tags
 auto_tags_unknown_trackers: true
 unknown_tracker_tag: "Other"
+
+# Tracker issue tag ( can be used to mark torrents with tracker issues )
+# *! This cans cause performance issues if you have a lot of torrents !*
+auto_tags_tracker_issue: true
+tracker_issue_tag: "TrackerIssue"

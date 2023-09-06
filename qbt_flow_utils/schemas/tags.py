@@ -39,6 +39,10 @@ class TagsConfig(BaseModel):
     # External app cross-seed tag :
     cross_seed_tag: str = "cross-seed"
 
+    # tracker is issue tag
+    auto_tags_tracker_issue: bool = False
+    tracker_issue_tag: str = "TrackerIssue"
+
     @model_validator(mode="before")
     @classmethod
     def validate_tags_string(cls, values: Any) -> Any:

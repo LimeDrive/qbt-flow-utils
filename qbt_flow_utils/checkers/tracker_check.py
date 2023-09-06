@@ -43,7 +43,6 @@ def get_torrent_tracker(torrent: APITorrentInfos) -> str:
 
 def _process_issue_tracker_check(
     torrent: TorrentDictionary,
-    config: Config = config,
 ) -> bool:
     for tracker in torrent.trackers:
         if tracker.status == 4:

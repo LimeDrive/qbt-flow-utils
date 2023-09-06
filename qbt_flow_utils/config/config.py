@@ -5,9 +5,8 @@ from typing import Dict, List, Tuple
 import yaml
 from pydantic import ValidationError
 
-from qbt_flow_utils.config.settings import settings
-from qbt_flow_utils.logging import logger
-from qbt_flow_utils.schemas import (
+from ..logging import logger
+from ..schemas import (
     ClientConfig,
     ClientsConfig,
     ScoringConfig,
@@ -15,6 +14,7 @@ from qbt_flow_utils.schemas import (
     TrackerConfig,
     TrackersConfig,
 )
+from .settings import settings
 
 
 def _load_trackers_config(config_path: str) -> Tuple[TrackersConfig, List[str]]:

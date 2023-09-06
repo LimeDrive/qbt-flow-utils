@@ -1,9 +1,9 @@
 """init schemas"""
-from qbt_flow_utils.schemas.clients import ClientConfig, ClientsConfig
-from qbt_flow_utils.schemas.scoring import ScoringConfig
-from qbt_flow_utils.schemas.tags import TagsConfig
-from qbt_flow_utils.schemas.torrents import APITorrentInfos, TorrentInfos
-from qbt_flow_utils.schemas.trackers import TrackerConfig, TrackersConfig
+from .clients import ClientConfig, ClientsConfig
+from .scoring import ScoringConfig
+from .tags import TagsConfig
+from .torrents import APITorrentInfos, TorrentInfos
+from .trackers import TrackerConfig, TrackersConfig
 
 __all__ = [
     "ClientConfig",

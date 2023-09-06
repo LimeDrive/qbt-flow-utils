@@ -3,7 +3,7 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, ByteSize, ConfigDict, Field, RootModel, model_validator
 
-from qbt_flow_utils.schemas.utils import parse_time
+from .utils import parse_time
 
 
 class HitAndRunConfig(BaseModel):

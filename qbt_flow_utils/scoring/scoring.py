@@ -1,8 +1,8 @@
 """Scoring functions for torrents."""
 
-from qbt_flow_utils.config import Config, get_config
-from qbt_flow_utils.logging import logger
-from qbt_flow_utils.schemas import APITorrentInfos
+from ..config import Config, get_config
+from ..logging import logger
+from ..schemas import APITorrentInfos
 
 config = get_config()
 

@@ -1,12 +1,11 @@
-"""Base List."""
+"""Base module for torrents infos list."""
 
 from typing import Dict
 
+import qbittorrentapi as qbt
 from pydantic import ValidationError
-from qbittorrentapi import Client
 
-from qbt_flow_utils.config import Config, get_config
-from qbt_flow_utils.flow_utils.checkers import (
+from ..checkers import (
     check_issue_tracker,
     check_public_tracker,
     check_torrent_cross_seed,
@@ -14,21 +13,22 @@ from qbt_flow_utils.flow_utils.checkers import (
     check_torrent_hit_and_run,
     get_torrent_tracker,
 )
-from qbt_flow_utils.flow_utils.scoring import get_torrent_score
-from qbt_flow_utils.logging import logger
-from qbt_flow_utils.schemas.torrents import APITorrentInfos, TorrentInfos
+from ..config import Config, get_config
+from ..logging import logger
+from ..schemas.torrents import APITorrentInfos, TorrentInfos
+from ..scoring import get_torrent_score
 
 config = get_config()
 
 
 def _process_torrents_infos_list(
-    client: Client,
+    torrents: qbt.TorrentInfoList,
     client_name: str = "local",
     config: Config = config,
 ) -> Dict[str, TorrentInfos]:
     """Process torrents infos list.
-    :param client: qBittorrent client
-    :type client: Client
+    :param torrents: Torrents list
+    :type torrents: qbt.TorrentInfoList
     :param client_name: Client name, defaults to "local"
     :type client_name: str, optional
     :param config: Config, defaults to config
@@ -40,7 +40,7 @@ def _process_torrents_infos_list(
     """
     torrents_list: Dict[str, TorrentInfos] = {}
 
-    for torrent in client.torrents_info():
+    for torrent in torrents:
         try:
             api_torrent_infos = APITorrentInfos.model_validate(torrent)
         except ValidationError as e:
@@ -63,7 +63,7 @@ def _process_torrents_infos_list(
                     tracker_tag=tracker_tag,
                 )
 
-            if client == "local" and config.settings.check_hard_links:
+            if client_name == "local" and config.settings.check_hard_links:
                 torrent_info.is_hard_link = check_torrent_hard_links(
                     torrent=api_torrent_infos,
                     client=client_name,
@@ -83,6 +83,39 @@ def _process_torrents_infos_list(
 
     assert torrents_list != {}, "torrents_list is empty"  # noqa: S101
     return torrents_list
+
+
+def get_torrents_infos_list(
+    torrents: qbt.TorrentInfoList,
+    client_name: str = "local",
+    config: Config = config,
+) -> Dict[str, TorrentInfos]:
+    """Get torrents infos list.
+
+    :param torrents: Torrents list
+    :type torrents: `TorrentInfoList`
+    :param client_name: Client name, defaults to "local"
+    :type client_name: str, optional
+    :param config: Config, defaults to config
+    :type config: Config, optional
+    :return: Torrents infos list with torrent hash as key and TorrentInfos as value
+    :rtype: `Dict[str, TorrentInfos]`
+
+    1. `issue_tracker` : This function checks if there are any issues with the torrent's tracker.
+    2. `public_tracker`: It determines whether the torrent is from a public tracker or not.
+    3. `cross_seed`    : This check identifies if the torrent is a cross-seed, meaning it is
+    available on multiple trackers.
+    4. `hard_links`    : It checks if the torrent has hard links,vwhich are multiple references
+    to the same file on the file system.
+    5.  `hit_and_run`  : This check determines if the torrent is a hit-and-run, which refers to
+    downloading a file and immediately stopping the seeding process.
+    6. `tracker_tag`   : Is retrieved using the  `get_torrent_tracker` function and is assigned
+    to the  tracker_tag attribute of the  TorrentInfos  object.
+    7. `scoring`       : Is calculated using the  get_torrent_score  function, based on the torrent
+    information and the tracker tag. The score is then assigned to the  score  attribute of the
+    `TorrentInfos`  object.
+    """
+    return _process_torrents_infos_list(torrents=torrents, client_name=client_name, config=config)
 
 
 if __name__ == "__main__":

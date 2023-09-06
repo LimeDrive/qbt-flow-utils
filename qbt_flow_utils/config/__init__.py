@@ -3,7 +3,9 @@ from typing import Dict, List
 
 from pydantic import BaseModel, ValidationError
 
-from qbt_flow_utils.config.config import (
+from ..logging import logger
+from ..schemas import ClientsConfig, ScoringConfig, TagsConfig, TrackersConfig
+from .config import (
     get_clients_config,
     get_clients_list,
     get_scoring_config,
@@ -12,9 +14,7 @@ from qbt_flow_utils.config.config import (
     get_trackers_config,
     get_trackers_tags_list,
 )
-from qbt_flow_utils.config.settings import Settings, settings
-from qbt_flow_utils.logging import logger
-from qbt_flow_utils.schemas import ClientsConfig, ScoringConfig, TagsConfig, TrackersConfig
+from .settings import Settings, settings
 
 
 class Config(BaseModel):

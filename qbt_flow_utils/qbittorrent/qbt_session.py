@@ -2,8 +2,8 @@
 
 import qbittorrentapi as qbt
 
-from qbt_flow_utils.config import Config, get_config
-from qbt_flow_utils.logging import logger
+from ..config import Config, get_config
+from ..logging import logger
 
 
 class QBTSession:

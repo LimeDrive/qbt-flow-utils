@@ -16,7 +16,8 @@ class TagsConfig(BaseModel):
     auto_tags_no_hard_link: bool = False
     no_hard_link_tag: str = "noHL"
 
-    # hardlinks torrents
+    # *! hardlinks torrents
+    # TODO: Check if tag hardlinked are realy needed...
     auto_tags_hard_link: bool = False
     hard_link_tag: str = "HardLink"
 
@@ -25,6 +26,7 @@ class TagsConfig(BaseModel):
     hit_and_run_tag: str = "H&R"
 
     # Up limit by auto-manage or manual
+    # TODO: When implement auto-manage, check for up limit tag.
     auto_tags_upload_limit: bool = False
     upload_limit_tag: str = "UpLimit"
 
@@ -33,7 +35,7 @@ class TagsConfig(BaseModel):
     public_tag: str = "Public"
 
     # False configured tracker tags
-    auto_tags_unknown_trackers: bool = False
+    auto_tags_trackers: bool = False
     unknown_tracker_tag: str = "Other"
 
     # External app cross-seed tag :

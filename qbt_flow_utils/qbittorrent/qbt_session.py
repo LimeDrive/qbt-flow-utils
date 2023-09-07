@@ -1,5 +1,7 @@
 """Connection to qBittorrent client."""
 
+from typing import DefaultDict, List, Optional
+
 import qbittorrentapi as qbt
 
 from ..config import Config, get_config
@@ -66,6 +68,34 @@ class QBTSession:
     def get_client_torrents_info(self, **kwargs) -> qbt.TorrentInfoList:
         """Get torrents list from client."""
         return self.client.torrents_info(**kwargs)
+
+    def process_torrents_tagerr(
+        self,
+        to_add: Optional[DefaultDict[str, List[str]]],
+        to_remove: Optional[DefaultDict[str, List[str]]],
+    ) -> bool:
+        """Add and remove tags from torrents.
+        :param to_add: Dict with tag as key and list of infohashes as value.
+        :param to_remove: Dict with tag as key and list of infohashes as value.
+        :return: True if successful, False otherwise.
+        """
+        if to_add:
+            for tag, infohashes in to_add.items():
+                try:
+                    self.client.torrents_add_tags(tags=tag, torrent_hashes=infohashes)
+                    logger.info(f"Added tag {tag} to {len(infohashes)} torrents.")
+                except:
+                    logger.error(f"Could not add tag {tag} to torrents.")
+                    raise
+        if to_remove:
+            for tag, infohashes in to_remove.items():
+                try:
+                    self.client.torrents_remove_tags(tags=tag, torrent_hashes=infohashes)
+                    logger.info(f"Removed tag {tag} from {len(infohashes)} torrents.")
+                except:
+                    logger.error(f"Could not remove tag {tag} from torrents.")
+                    raise
+        return True
 
 
 if __name__ == "__main__":

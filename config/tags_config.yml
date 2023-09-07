@@ -29,7 +29,7 @@ auto_tags_public: true
 public_tag: "public"
 
 # None configured tracker tags
-auto_tags_unknown_trackers: true
+auto_tags_trackers: true
 unknown_tracker_tag: "Other"
 
 # Tracker issue tag ( can be used to mark torrents with tracker issues )

@@ -113,8 +113,6 @@ def _process_torrents_infos_list(
 
 def get_torrents_infos_list(
     torrents: qbt.TorrentInfoList,
-    client_name: str = "local",
-    config: Config = config,
 ) -> Dict[str, TorrentInfos]:
     """Get torrents infos list.
 
@@ -141,7 +139,7 @@ def get_torrents_infos_list(
     information and the tracker tag. The score is then assigned to the  score  attribute of the
     `TorrentInfos`  object.
     """
-    return _process_torrents_infos_list(torrents=torrents, client_name=client_name, config=config)
+    return _process_torrents_infos_list(torrents=torrents)
 
 
 if __name__ == "__main__":

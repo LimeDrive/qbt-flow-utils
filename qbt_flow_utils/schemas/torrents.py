@@ -77,3 +77,5 @@ class TorrentInfos(BaseModel):
     is_public: bool | None = None
     is_issue: bool | None = None  # TODO:LOW implement issue check
     is_cross_seed: bool | Tuple[str, str] | None = None
+    is_up_limit: bool | None = None
+    is_down_limit: bool | None = None

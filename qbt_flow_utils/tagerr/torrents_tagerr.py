@@ -62,6 +62,12 @@ def _process_torrents_tags(
                 not torrent.is_hard_link,
                 config.tags.auto_tags_no_hard_link,
             ),
+            (
+                config.tags.download_limit_tag,
+                torrent.is_down_limit,
+                config.tags.auto_tags_download_limit,
+            ),
+            (config.tags.upload_limit_tag, torrent.is_up_limit, config.tags.auto_tags_upload_limit),
         ]
 
         for tag, condition, auto_tag in tags:

@@ -12,10 +12,6 @@
 auto_tags_no_hard_link: false
 no_hard_link_tag: "noHL"
 
-# hardlinks torrents
-auto_tags_hard_link: true
-hard_link_tag: "hardlink"
-
 # Hit-and-Run torrents
 auto_tags_hit_and_run: true
 hit_and_run_tag: "H&R"
@@ -23,6 +19,9 @@ hit_and_run_tag: "H&R"
 # Up limit by auto-manage or manual
 auto_tags_upload_limit: true
 upload_limit_tag: "UpLimit"
+
+auto_tags_download_limit: true
+download_limit_tag: "DownLimit"
 
 # Public tracker Torrents
 auto_tags_public: true
@@ -36,3 +35,5 @@ unknown_tracker_tag: "Other"
 # *! This cans cause performance issues if you have a lot of torrents !*
 auto_tags_tracker_issue: true
 tracker_issue_tag: "TrackerIssue"
+
+cross_seed_tag: "cross-seed"

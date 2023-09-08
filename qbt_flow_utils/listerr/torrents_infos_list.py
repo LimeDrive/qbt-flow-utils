@@ -9,8 +9,10 @@ from ..checkers import (
     check_issue_tracker,
     check_public_tracker,
     check_torrent_cross_seed,
+    check_torrent_download_limit,
     check_torrent_hard_links,
     check_torrent_hit_and_run,
+    check_torrent_upload_limit,
     get_torrent_tracker,
 )
 from ..config import Config, get_config
@@ -19,6 +21,59 @@ from ..schemas.torrents import APITorrentInfos, TorrentInfos
 from ..scoring import get_torrent_score
 
 config = get_config()
+
+
+def _validate_torrent_data(torrent: qbt.TorrentDictionary) -> APITorrentInfos | None:
+    """Validate torrent data from API."""
+    try:
+        return APITorrentInfos.model_validate(torrent)
+    except ValidationError as e:
+        logger.error(f"Could not validate torrent from api data {torrent.hash}: {e}")
+
+
+def _get_torrent_infos(torrent: qbt.TorrentDictionary, client_name: str) -> TorrentInfos | None:
+    """Get TorrentInfos object from torrent data."""
+
+    api_torrent_infos = _validate_torrent_data(torrent)
+
+    if api_torrent_infos:
+        torrent_infos = TorrentInfos(api=api_torrent_infos, client=client_name)
+        tracker_tag = get_torrent_tracker(torrent=api_torrent_infos)
+        torrent_infos.tracker_tag = tracker_tag
+
+        torrent_infos.score = get_torrent_score(
+            torrent=api_torrent_infos,
+            tracker_tag=tracker_tag,
+        )
+
+        if config.tags.auto_tags_hit_and_run:
+            torrent_infos.is_hit_and_run = check_torrent_hit_and_run(
+                torrent=api_torrent_infos,
+                tracker_tag=tracker_tag,
+            )
+
+        if client_name == "local" and config.settings.check_hard_links:
+            torrent_infos.is_hard_link = check_torrent_hard_links(
+                torrent=api_torrent_infos,
+                client=client_name,
+            )
+
+        if config.settings.check_cross_seed:
+            torrent_infos.is_cross_seed = check_torrent_cross_seed(torrent=api_torrent_infos)
+
+        if config.tags.auto_tags_public:
+            torrent_infos.is_public = check_public_tracker(torrent=api_torrent_infos)
+
+        if config.tags.auto_tags_tracker_issue:
+            torrent_infos.is_issue = check_issue_tracker(torrent=torrent)
+
+        if config.tags.auto_tags_download_limit:
+            torrent_infos.is_down_limit = check_torrent_download_limit(torrent=api_torrent_infos)
+
+        if config.tags.auto_tags_upload_limit:
+            torrent_infos.is_up_limit = check_torrent_upload_limit(torrent=api_torrent_infos)
+
+        return torrent_infos
 
 
 def _process_torrents_infos_list(
@@ -41,45 +96,16 @@ def _process_torrents_infos_list(
     torrents_list: Dict[str, TorrentInfos] = {}
 
     for torrent in torrents:
-        try:
-            api_torrent_infos = APITorrentInfos.model_validate(torrent)
-        except ValidationError as e:
-            logger.error(f"Could not validate torrent from api data {torrent.hash}: {e}")
-            continue
+        torrent_infos = _get_torrent_infos(torrent=torrent, client_name=client_name)
 
-        if api_torrent_infos:
-            torrent_info = TorrentInfos(api=api_torrent_infos, client=client_name)
-            tracker_tag = get_torrent_tracker(torrent=api_torrent_infos)
-            torrent_info.tracker_tag = tracker_tag
-
-            torrent_info.score = get_torrent_score(
-                torrent=api_torrent_infos,
-                tracker_tag=tracker_tag,
-            )
-
-            if config.tags.auto_tags_hit_and_run:
-                torrent_info.is_hit_and_run = check_torrent_hit_and_run(
-                    torrent=api_torrent_infos,
-                    tracker_tag=tracker_tag,
-                )
-
-            if client_name == "local" and config.settings.check_hard_links:
-                torrent_info.is_hard_link = check_torrent_hard_links(
-                    torrent=api_torrent_infos,
-                    client=client_name,
-                )
-
-            if config.settings.check_cross_seed:
-                torrent_info.is_cross_seed = check_torrent_cross_seed(torrent=api_torrent_infos)
-
-            if config.tags.auto_tags_public:
-                torrent_info.is_public = check_public_tracker(torrent=api_torrent_infos)
-
-            if config.tags.auto_tags_tracker_issue:
-                torrent_info.is_issue = check_issue_tracker(torrent=torrent)
-
-            if torrent.state in ["forcedUP", "stalledUP", "queuedUP", "pausedUP", "uploading"]:
-                torrents_list[str(torrent.hash)] = torrent_info
+        if torrent_infos and torrent.state in [
+            "forcedUP",
+            "stalledUP",
+            "queuedUP",
+            "pausedUP",
+            "uploading",
+        ]:
+            torrents_list[str(torrent.hash)] = torrent_infos
 
     assert torrents_list != {}, "torrents_list is empty"  # noqa: S101
     return torrents_list

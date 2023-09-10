@@ -4,8 +4,8 @@ from typing import DefaultDict, List, Optional
 
 import qbittorrentapi as qbt
 
-from ..config import Config, get_config
-from ..logging import logger
+from ..config import Config
+from ..config.logging import logger
 
 
 class QBTSession:
@@ -96,10 +96,3 @@ class QBTSession:
                     logger.error(f"Could not remove tag {tag} from torrents.")
                     raise
         return True
-
-
-if __name__ == "__main__":
-    config = get_config()
-
-    if "local" in config.clients_list:
-        local_client = QBTSession("local", config=config)

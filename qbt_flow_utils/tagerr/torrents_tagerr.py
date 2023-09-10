@@ -4,7 +4,7 @@ from collections import defaultdict
 from typing import DefaultDict, Dict, List, Optional, Tuple
 
 from ..config import Config, get_config
-from ..logging import logger
+from ..config.logging import logger
 from ..schemas.torrents import TorrentInfos
 
 config = get_config()

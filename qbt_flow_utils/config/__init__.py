@@ -3,7 +3,6 @@ from typing import Dict, List
 
 from pydantic import BaseModel, ValidationError
 
-from ..logging import logger
 from ..schemas import ClientsConfig, ScoringConfig, TagsConfig, TrackersConfig
 from .config import (
     get_clients_config,
@@ -14,6 +13,7 @@ from .config import (
     get_trackers_config,
     get_trackers_tags_list,
 )
+from .logging import configure_logging, logger
 from .settings import Settings, settings
 
 
@@ -82,4 +82,6 @@ def get_config() -> Config:
 __all__ = [
     "Config",
     "get_config",
+    "logger",
+    "configure_logging",
 ]

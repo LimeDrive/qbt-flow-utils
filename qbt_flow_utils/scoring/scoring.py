@@ -1,7 +1,7 @@
 """Scoring functions for torrents."""
 
 from ..config import Config, get_config
-from ..logging import logger
+from ..config.logging import logger
 from ..schemas import APITorrentInfos
 
 config = get_config()

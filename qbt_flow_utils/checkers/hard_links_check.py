@@ -2,7 +2,7 @@
 import os
 
 from qbt_flow_utils.config import Config, get_config
-from qbt_flow_utils.logging import logger
+from qbt_flow_utils.config.logging import logger
 from qbt_flow_utils.schemas import APITorrentInfos
 
 config = get_config()

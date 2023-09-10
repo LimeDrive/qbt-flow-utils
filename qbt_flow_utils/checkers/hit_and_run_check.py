@@ -1,7 +1,7 @@
 """Functions for handling hit and run torrents."""
 
 from qbt_flow_utils.config import Config, get_config
-from qbt_flow_utils.logging import logger
+from qbt_flow_utils.config.logging import logger
 from qbt_flow_utils.schemas import APITorrentInfos
 
 config = get_config()
@@ -29,18 +29,16 @@ def _process_hit_and_run_check(
                 condition == "min_ratio" and (torrent.ratio >= threshold)
             ):
                 logger.debug(
-                    f"Hit and run condition met for {tracker_tag}: {torrent.name},"
-                    f" {torrent.hash_v1}",
+                    f"Hit and run condition met for {tracker_tag}: {torrent.name}, {torrent.hash}",
                 )
                 return True
         else:
             logger.debug(
-                f"Hit and run condition not met for {tracker_tag}: {torrent.name},"
-                f" {torrent.hash_v1}",
+                f"Hit and run condition not met for {tracker_tag}: {torrent.name}, {torrent.hash}",
             )
             return False
     else:
-        logger.debug(f"Hit and run ignored for {tracker_tag}: {torrent.name}, {torrent.hash_v1}")
+        logger.debug(f"Hit and run ignored for {tracker_tag}: {torrent.name}, {torrent.hash}")
         return False
 
 

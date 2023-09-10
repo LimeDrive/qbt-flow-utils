@@ -3,7 +3,7 @@
 from typing import Tuple
 
 from qbt_flow_utils.config import Config, get_config
-from qbt_flow_utils.logging import logger
+from qbt_flow_utils.config.logging import logger
 from qbt_flow_utils.schemas import APITorrentInfos
 
 config = get_config()
@@ -25,7 +25,7 @@ def _process_cross_seed_check(
     """
     if torrent.downloaded == 0 and config.tags.cross_seed_tag in torrent.tags:
         logger.debug(f"Torrent {torrent.name} is cross-seeded")
-        return (torrent.content_path, torrent.hash_v1)
+        return (torrent.content_path, torrent.hash)
     elif torrent.downloaded > 0 and config.tags.cross_seed_tag in torrent.tags:
         logger.debug(f"Torrent {torrent.name} is cross-seeded but has downloaded data")
         return False

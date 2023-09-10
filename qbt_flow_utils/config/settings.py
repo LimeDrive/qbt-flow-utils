@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     # Current environment
     environment: str = "dev"
 
-    log_level: LogLevel = LogLevel.INFO
+    log_level: LogLevel = LogLevel.DEBUG
 
     # Variables for qbt-flow-utils @TODO: review command names
     dry_run: bool = False

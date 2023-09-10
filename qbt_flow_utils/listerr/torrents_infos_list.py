@@ -16,7 +16,7 @@ from ..checkers import (
     get_torrent_tracker,
 )
 from ..config import Config, get_config
-from ..logging import logger
+from ..config.logging import logger
 from ..schemas.torrents import APITorrentInfos, TorrentInfos
 from ..scoring import get_torrent_score
 

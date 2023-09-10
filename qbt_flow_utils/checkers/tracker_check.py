@@ -2,7 +2,7 @@
 from qbittorrentapi import TorrentDictionary
 
 from qbt_flow_utils.config import Config, get_config
-from qbt_flow_utils.logging import logger
+from qbt_flow_utils.config.logging import logger
 from qbt_flow_utils.schemas import APITorrentInfos
 
 config = get_config()
@@ -24,11 +24,11 @@ def _process_tracker_check(
         for keyword in config.trackers[tag].tracker_keywords:
             if keyword in torrent.tracker:
                 logger.debug(
-                    f"Torrent {torrent.name}:{torrent.hash_v1} is from tracker {tag}",
+                    f"Torrent {torrent.name}:{torrent.hash} is from tracker {tag}",
                 )
                 return tag
     else:
-        logger.debug(f"Torrent {torrent.name}:{torrent.hash_v1} as no configured tracker")
+        logger.debug(f"Torrent {torrent.name}:{torrent.hash} as no configured tracker")
         return config.tags.unknown_tracker_tag
 
 

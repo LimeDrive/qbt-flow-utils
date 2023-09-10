@@ -5,7 +5,6 @@ from typing import Dict, List, Tuple
 import yaml
 from pydantic import ValidationError
 
-from ..logging import logger
 from ..schemas import (
     ClientConfig,
     ClientsConfig,
@@ -14,6 +13,7 @@ from ..schemas import (
     TrackerConfig,
     TrackersConfig,
 )
+from .logging import logger
 from .settings import settings
 
 

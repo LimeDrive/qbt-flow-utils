@@ -30,8 +30,6 @@ class QBTSession:
             logger.error(f"Could not connect to qBittorrent {client_name} client: {e}")
             raise
 
-        self.torrents_info = self.get_client_torrents_info()
-
     def get_session(self) -> qbt.Client:
         """Gets qBittorrent client session."""
         return self.client
@@ -68,6 +66,10 @@ class QBTSession:
     def get_client_torrents_info(self, **kwargs) -> qbt.TorrentInfoList:
         """Get torrents list from client."""
         return self.client.torrents_info(**kwargs)
+
+    def get_maindata(self, **kwargs) -> qbt.SyncMainDataDictionary:
+        """Get maindata from client."""
+        return self.client.sync.maindata.delta(**kwargs)
 
     def process_torrents_tagerr(
         self,

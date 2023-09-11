@@ -16,7 +16,7 @@ login:
 
 # Disk controle methode on remote device.
 disk_control_method:
-  keep_free_gib: 120
+  keep_free_gib: "120 GiB"
 
 # <Category Name> : <save_path>  # Path of your save directory.
 category:

@@ -13,7 +13,7 @@ config = get_config()
 def _process_cross_seed_check(
     torrent: APITorrentInfos,
     config: Config = config,
-) -> bool | Tuple[str, str]:
+) -> bool | Tuple[str, str] | None:
     """Process cross seed check.
     :param torrent: Torrent to check
     :type torrent: TorrentInfos
@@ -23,18 +23,22 @@ def _process_cross_seed_check(
              content_path, hash if cross-seeded and not downloaded, Tuple[str, str]
     :rtype: bool | Tuple[str, str]
     """
-    if torrent.downloaded == 0 and config.tags.cross_seed_tag in torrent.tags:
-        logger.debug(f"Torrent {torrent.name} is cross-seeded")
-        return (torrent.content_path, torrent.hash)
-    elif torrent.downloaded > 0 and config.tags.cross_seed_tag in torrent.tags:
-        logger.debug(f"Torrent {torrent.name} is cross-seeded but has downloaded data")
-        return False
+    if torrent.tags:
+        if torrent.downloaded == 0 and config.tags.cross_seed_tag in torrent.tags:
+            logger.debug(f"Torrent {torrent.name} is cross-seeded")
+            return (torrent.content_path, torrent.hash)
+        elif torrent.downloaded > 0 and config.tags.cross_seed_tag in torrent.tags:
+            logger.debug(f"Torrent {torrent.name} is cross-seeded but has downloaded data")
+            return False
+        else:
+            logger.debug(f"Torrent {torrent.name} is not cross-seeded")
+            return False
     else:
-        logger.debug(f"Torrent {torrent.name} is not cross-seeded")
-        return False
+        logger.debug(f"Torrent {torrent.name} has no tags")
+        return None
 
 
-def check_torrent_cross_seed(torrent: APITorrentInfos) -> bool | Tuple[str, str]:
+def check_torrent_cross_seed(torrent: APITorrentInfos) -> bool | Tuple[str, str] | None:
     """Check if torrent are a cross seed.
     :param torrent: Torrent to check
     :type torrent: TorrentInfos

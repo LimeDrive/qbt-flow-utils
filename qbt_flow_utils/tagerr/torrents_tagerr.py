@@ -11,18 +11,18 @@ config = get_config()
 
 
 def _handle_tag(
-    tag: str,
+    tag: str | None,
     condition: bool | None,
-    torrent_tags: List[str],
+    torrent_tags: List[str] | None,
     add_tags: List[str],
     remove_tags: List[str],
     auto_tag: bool,
 ) -> None:
     """Handle a tag based on the condition and auto_tag."""
     if auto_tag and condition is not None:
-        if condition and tag not in torrent_tags:
+        if (tag and torrent_tags) and (condition and tag not in torrent_tags):
             add_tags.append(tag)
-        elif not condition and tag in torrent_tags:
+        elif (tag and torrent_tags) and (not condition and tag in torrent_tags):
             remove_tags.append(tag)
 
 
@@ -80,7 +80,7 @@ def _process_torrents_tags(
                 auto_tag,
             )
 
-        if config.tags.auto_tags_trackers and torrent.tracker_tag is not None:
+        if config.tags.auto_tags_trackers and torrent.tracker_tag and torrent.api.tags:
             if torrent.tracker_tag not in torrent.api.tags:
                 torrent_tags_to_add.append(torrent.tracker_tag)
             if (

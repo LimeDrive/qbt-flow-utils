@@ -10,6 +10,9 @@ packages = [
   {include = "qbt_flow_utils"}
 ]
 
+[tool.poetry.scripts]
+qbt-flow-utils = "qbt_flow_utils.__main__:main"
+
 [tool.poetry.dependencies]
 python = ">=3.8,<3.11"
 pydantic-settings = "^2.0.3"

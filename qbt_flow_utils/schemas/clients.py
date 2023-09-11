@@ -3,6 +3,7 @@ from typing import Any, Dict, Optional
 
 from pydantic import (
     BaseModel,
+    ByteSize,
     ConfigDict,
     Field,
     RootModel,
@@ -27,7 +28,7 @@ class ClientDiskControlMethodConfig(BaseModel):
 
     max_percents: Optional[int] = None
     path_to_check: Optional[str] = None
-    keep_free_gib: Optional[int] = None
+    keep_free_gib: Optional[ByteSize] = None
 
     @model_validator(mode="before")
     @classmethod
